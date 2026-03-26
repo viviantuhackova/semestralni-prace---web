@@ -1,21 +1,44 @@
 body {
-    background-color: #f0f0f0;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: white;
 }
 
 #menu {
     background-color: white;
     padding: 10px;
+    border-bottom: 2px solid darkslategrey;
+    text-align: center;
 }
 
 #menu a {
-    margin-right: 15px;
+    margin: 15px;
     color: black;
     text-decoration: none;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+#menu a:hover {
+    color: orange;
 }
 
 #hlavni-foto img {
     width: 100%;
     height: auto;
+    display: block;
+}
+
+.nadpis-prekryv {
+    text-align: center;
+    padding: 40px 20px;
+    color: black;
+}
+
+.produkt-vypis {
+    text-align: center;
+    padding: 20px;
 }
 
 .polozka {
@@ -23,11 +46,37 @@ body {
     background-color: white;
     margin: 10px;
     padding: 10px;
+    width: 250px;
+    display: inline-block;
+    vertical-align: top;
+    text-align: center;
+    transition: 0.3s;
+}
+
+.polozka:hover {
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    border-color: orange;
+}
+
+.polozka img {
+    width: 100%;
+    height: auto;
+    border-radius: 5px;
 }
 
 .moje-tlacitko {
     color: orange;
     font-weight: bold;
+    text-decoration: none;
+    border: 2px solid orange;
+    padding: 8px 15px;
+    display: inline-block;
+    margin-top: 15px;
+    transition: 0.3s;
+}
+
+.moje-tlacitko:hover {
+    color: darkorange;
 }
 
 #paticka {
