@@ -25,6 +25,22 @@
     </div>
 
     <div id="produkty">
+
+        <div style="text-align: center; padding: 20px; background: #fff5e6; border-radius: 10px; margin: 20px auto; width: 80%; border: 1px solid orange;">
+            <?php
+            date_default_timezone_set('Europe/Prague');
+            $hodina = date("G");
+
+            if ($hodina < 12) {
+                echo "<h3>Dobré ráno! Dejte si k snídani čerstvé mango. </h3>";
+            } elseif ($hodina < 18) {
+                echo "<h3>Hezké odpoledne! Máme pro vás čerstvou várku ovoce. </h3>";
+            } else {
+                echo "<h3>Dobrý večer! Načerpejte tropickou energii na zítra. </h3>";
+            }
+            ?>
+        </div>
+        
         <h2 style="text-align: center;">Aktuální nabídka</h2>
         
         <div class="produkt-vypis">
