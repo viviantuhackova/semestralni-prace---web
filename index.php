@@ -4,12 +4,13 @@
     <meta charset="UTF-8">
     <title>Moje semestrální práce - Tropico</title>
     <link rel="stylesheet" href="styl.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     </head>
 <body>
 
     <div id="menu">
         <img src="obrazky/logo.jpg" alt="logo" width="80">
-        <a href="index.html">Domů</a>
+        <a href="index.php">Domů</a>
         <a href="#produkty">Nabídka</a>
         <a href="#kontakt">Kontakt</a>
         <a href="admin.html">Pro zaměstnance</a>

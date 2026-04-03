@@ -1,5 +1,9 @@
+html {
+    scroll-behavior: smooth;
+}
+
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Montserrat', sans-serif;
     margin: 0;
     padding: 0;
     background-color: white;
@@ -10,6 +14,9 @@ body {
     padding: 10px;
     border-bottom: 2px solid darkslategrey;
     text-align: center;
+    position: sticky;
+    top: 0;
+    z-index: 100;
 }
 
 #menu a {
@@ -24,16 +31,28 @@ body {
     color: orange;
 }
 
+#hlavni-foto {
+    position: relative;
+    text-align: center;
+}
+
 #hlavni-foto img {
-    width: 100%;
+   width: 100%;
     height: auto;
     display: block;
 }
 
 .nadpis-prekryv {
-    text-align: center;
-    padding: 40px 20px;
-    color: black;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+}
+
+.nadpis-prekryv h1, .nadpis-prekryv p {
+    text-shadow: 2px 2px 10px black;
+    margin: 10px;
 }
 
 .produkt-vypis {
@@ -42,44 +61,54 @@ body {
 }
 
 .polozka {
-    border: 1px solid black;
+    border: none;
     background-color: white;
-    margin: 10px;
-    padding: 10px;
+    margin: 15px;
+    padding: 20px;
     width: 250px;
     display: inline-block;
     vertical-align: top;
     text-align: center;
+    border-radius: 25px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.10);
     transition: 0.3s;
 }
 
 .polozka:hover {
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-    border-color: orange;
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(255, 165, 0, 0.2);
 }
 
 .polozka img {
     width: 100%;
     height: auto;
-    border-radius: 5px;
+    border-radius: 15px;
 }
 
-.moje-tlacitko {
+button, .moje-tlacitko {
+    font-family: 'Montserrat', sans-serif;
+    background-color: white;
     color: orange;
+    border: 2px solid orange;
     font-weight: bold;
     text-decoration: none;
-    border: 2px solid orange;
-    padding: 8px 15px;
+    border-radius: 50px;
+    padding: 10px 20px;
     display: inline-block;
+    cursor: pointer;
     margin-top: 15px;
     transition: 0.3s;
 }
 
-.moje-tlacitko:hover {
-    color: darkorange;
+button:hover, .moje-tlacitko:hover {
+    background-color: darkorange;
+    color: white;
+    transform: scale(1.05);
+    box-shadow: 0 5px 15px rgba(255, 165, 0, 0.3);
 }
 
 #paticka {
     text-align: center;
-    padding: 20px;
+    padding: 40px;
+    color: grey;
 }
