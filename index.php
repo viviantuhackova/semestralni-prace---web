@@ -13,7 +13,7 @@
         <a href="index.php">Domů</a>
         <a href="#produkty">Nabídka</a>
         <a href="#kontakt">Kontakt</a>
-        <a href="admin.html">Pro zaměstnance</a>
+        <a href="admin.php">Pro zaměstnance</a>
     </div>
 
     <div id="hlavni-foto">
