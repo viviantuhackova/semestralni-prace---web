@@ -6,7 +6,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styladmin.css">
 </head>
-<body class="login-body">
+<body class="login-body" style="background-image: url('obrazky/pozadi.jpg'); background-size: cover;">
 
     <div class="login-container">
         <form action="admin.php" method="POST" class="login-form">
