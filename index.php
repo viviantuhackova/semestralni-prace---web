@@ -1,3 +1,14 @@
+<?php 
+include 'databaze.php'; 
+
+try {
+    // Načtení všech produktů z databáze
+    $stmt = $pdo->query('SELECT * FROM "Tuhackova_web".produkty ORDER BY id ASC');
+} catch (PDOException $e) {
+    die("Chyba při připojení k databázi: " . $e->getMessage());
+}
+?>
+
 <html>
 <html lang="cs">
 <head>
@@ -47,21 +58,30 @@
         <h2 style="text-align: center;">Aktuální nabídka</h2>
         
         <div class="produkt-vypis">
-            <div class="polozka">
-                <img src="obrazky/mango.jpg" alt="mango" width="200">
-                <h3>Sladké Mango</h3>
-                <p>Původ: Thajsko</p>
-                <p><b>Cena: 89 Kč / kg</b></p>
-                <button>Do košíku</button>
-            </div>
-            
-            <div class="polozka">
-                <img src="obrazky/pitaya.jpg" alt="pitaya" width="200">
-                <h3>Dračí ovoce</h3>
-                <p>Původ: Vietnam</p>
-                <p><b>Cena: 120 Kč / ks</b></p>
-                <button>Do košíku</button>
-            </div>
+            <?php while ($row = $stmt->fetch()): ?>
+                <div class="polozka" style="position: relative;">
+                    
+                    <?php if (isset($row['bestseller']) && ($row['bestseller'] == true || $row['bestseller'] === 't')): ?>
+                        <div style="position: absolute; top: 10px; right: 10px; padding: 5px 10px; background: white; border: 2px solid orange; border-radius: 5px; z-index: 10;">
+                            <span style="color: orange; font-weight: bold; font-size: 12px; text-transform: uppercase;">
+                                ★ Náš favorit
+                            </span>
+                        </div>
+                    <?php endif; ?>
+
+                    <img src="obrazky/<?php echo htmlspecialchars($row['obrazek']); ?>" alt="<?php echo htmlspecialchars($row['nazev']); ?>" width="200">
+                    <h3><?php echo htmlspecialchars($row['nazev']); ?></h3>
+                    
+                    <p style="font-size: 14px; font-style: italic; color: #666; min-height: 40px;">
+                        <?php echo htmlspecialchars($row['popis']); ?>
+                    </p>
+                    
+                    <p>Původ: <?php echo htmlspecialchars($row['puvod']); ?></p>
+                    <p><b>Cena: <?php echo number_format($row['cena'], 2, ',', ' '); ?> Kč / <?php echo htmlspecialchars($row['jednotka']); ?></b></p>
+                    
+                    <button>Do košíku</button>
+                </div>
+            <?php endwhile; ?>
         </div>
     </div>
     
@@ -84,22 +104,22 @@
         }).addTo(map);
 
         L.marker([50.6607, 14.0325]).addTo(map)
-            .bindPopup('<b>Pobočka Ústí</b><br>Dovážíme z: Thajska');
+            .bindPopup('<b>Pobočka Ústí</b><br>Dovážíme z: Peru');
 
         L.marker([50.0878, 14.4205]).addTo(map)
-            .bindPopup('<b>Pobočka Praha</b><br>Dovážíme z: Vietnamu');
+            .bindPopup('<b>Pobočka Praha</b><br>Centrální sklad');
 
         L.marker([49.1951, 16.6068]).addTo(map)
             .bindPopup('<b>Pobočka Brno</b><br>Dovážíme z: Vietnamu');
 
         L.marker([49.7475, 13.3776]).addTo(map)
-            .bindPopup('<b>Pobočka Plzeň</b><br>Dovážíme z: Thajska');
+            .bindPopup('<b>Pobočka Plzeň</b><br>Dovážíme z: Ekvádoru');
 
         L.marker([49.8209, 18.2625]).addTo(map)
             .bindPopup('<b>Pobočka Ostrava</b><br>Dovážíme z: Thajska');
 
         L.marker([48.9745, 14.4743]).addTo(map)
-            .bindPopup('<b>Pobočka Č. Budějovice</b><br>Dovážíme z: Vietnamu');
+            .bindPopup('<b>Pobočka Č. Budějovice</b><br>Dovážíme z: Itálie');
 
         setTimeout(function(){ map.invalidateSize(); }, 500);
     </script>
