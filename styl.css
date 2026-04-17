@@ -107,6 +107,65 @@ button:hover, .moje-tlacitko:hover {
     box-shadow: 0 5px 15px rgba(255, 165, 0, 0.3);
 }
 
+#objednavka {
+    max-width: 400px;
+    margin: 50px auto;
+    border: 2px solid orange;
+    padding: 30px;
+    border-radius: 20px;
+    background-color: #fffaf0;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+#objednavka h3 {
+    text-align: center;
+    color: orange;
+}
+
+#objednavka label {
+    font-weight: bold;
+    display: block;
+    margin-top: 10px;
+}
+
+#objednavka input {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-sizing: border-box;
+}
+
+#objednavka input[readonly] {
+    background-color: #eee;
+    color: #555;
+}
+
+#objednavka button {
+    width: 100%;
+    background-color: orange;
+    color: white;
+    border: none;
+    padding: 15px;
+    font-size: 16px;
+    margin-top: 20px;
+}
+
+#objednavka button:hover {
+    background-color: darkorange;
+}
+
+.oznameni-success {
+    text-align: center;
+    color: green;
+    font-weight: bold;
+    background: #d4edda;
+    padding: 10px;
+    border-radius: 10px;
+    margin: 20px;
+}
+
 #paticka {
     text-align: center;
     padding: 40px;

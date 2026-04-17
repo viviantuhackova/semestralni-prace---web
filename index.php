@@ -1,5 +1,30 @@
 <?php 
 include 'databaze.php'; 
+session_start();
+
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['odeslat_objednavku'])) {
+    $jmeno = $_POST['jmeno'];
+    $email = $_POST['email'];
+    $produkt = $_POST['produkt'];
+    $mnozstvi = $_POST['mnozstvi'];
+
+    try {
+        $sql = 'INSERT INTO "Tuhackova_web".objednavky (jmeno, email, produkt, datum_vytvoreni, mnozstvi) 
+                VALUES (?, ?, ?, NOW(), ?)';
+        $stmt_insert = $pdo->prepare($sql);
+        $stmt_insert->execute([$jmeno, $email, $produkt, $mnozstvi]);
+        $oznameni = "Objednávka na $mnozstvi $produkt byla odeslána!";
+        echo "<script>
+            window.onload = function() { 
+                var element = document.getElementById('objednavka');
+                element.scrollIntoView({ behavior: 'auto', block: 'center' }); 
+            };
+        </script>";
+        
+    } catch (PDOException $e) {
+        $oznameni = "Chyba při zápisu: " . $e->getMessage();
+    }
+}
 
 try {
     // Načtení všech produktů z databáze
@@ -18,7 +43,15 @@ try {
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
-    </head>
+    
+    <script>
+    function doKosiku(nazev) {
+        document.getElementById('vybrany_produkt').value = nazev;
+        var sekce = document.getElementById('objednavka');
+        sekce.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+    </script>
+</head>
 <body>
 
     <div id="menu">
@@ -79,10 +112,36 @@ try {
                     <p>Původ: <?php echo htmlspecialchars($row['puvod']); ?></p>
                     <p><b>Cena: <?php echo number_format($row['cena'], 2, ',', ' '); ?> Kč / <?php echo htmlspecialchars($row['jednotka']); ?></b></p>
                     
-                    <button>Do košíku</button>
+                    <button type="button" onclick="doKosiku('<?php echo htmlspecialchars($row['nazev']); ?>')">Do košíku</button>
                 </div>
             <?php endwhile; ?>
         </div>
+    </div>
+    
+    <div id="objednavka">
+        <h3>Objednávka</h3>
+        
+        <?php if (isset($oznameni)): ?>
+            <div style="background: lightgreen; color: darkgreen; padding: 10px; text-align: center; font-weight: bold; border: 1px solid green;">
+                <?php echo $oznameni; ?>
+            </div>
+        <?php endif; ?>
+
+        <form method="post" action="index.php">
+            <label for="jmeno">Jméno:</label>
+            <input type="text" name="jmeno" id="jmeno" required>
+            
+            <label for="email">E-mail:</label>
+            <input type="email" name="email" id="email" required>
+            
+            <label for="vybrany_produkt">Produkt:</label>
+            <input type="text" id="vybrany_produkt" name="produkt" readonly>
+            
+            <label for="mnozstvi">Množství (kolik chcete):</label>
+            <input type="text" name="mnozstvi" id="mnozstvi" placeholder="např. 5 kg" required>
+            
+            <button type="submit" name="odeslat_objednavku">ODESLAT</button>
+        </form>
     </div>
     
     <div id="kontakt">
