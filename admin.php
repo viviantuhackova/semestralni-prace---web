@@ -31,6 +31,7 @@ if (isset($_GET['logout'])) {
 <html lang="cs">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Přihlášení pro zaměstnance | Tropico</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styladmin.css">
@@ -65,19 +66,32 @@ if (isset($_GET['logout'])) {
                 <tr>
                     <th>ID</th>
                     <th>Jméno</th>
+                    <th>Příjmení</th>
+                    <th>Email</th>
                     <th>Produkt</th>
                     <th>Množství</th>
                     <th>Datum</th>
                 </tr>
                 <?php
-                $stmt = $pdo->query('SELECT * FROM "Tuhackova_web".objednavky ORDER BY datum_vytvoreni DESC');
+                $stmt = $pdo->query('
+                    SELECT o.*, p.nazev AS nazev_ovoce, p.jednotka
+                    FROM "Tuhackova_web".objednavky o
+                    JOIN "Tuhackova_web".produkty p ON o.produkt_id = p.id
+                    ORDER BY o.datum_vytvoreni DESC
+                ');
+                
                 while ($row = $stmt->fetch()) {
                     echo "<tr>
                             <td>{$row['id']}</td>
-                            <td>" . htmlspecialchars($row['jmeno']) . "</td>
-                            <td>" . htmlspecialchars($row['produkt']) . "</td>
-                            <td>" . htmlspecialchars($row['mnozstvi']) . "</td>
-                            <td>{$row['datum_vytvoreni']}</td>
+                            <td>" . htmlspecialchars($row['krestni_jmeno']) . "</td>
+                            <td>" . htmlspecialchars($row['prijmeni']) . "</td>
+                            <td>" . htmlspecialchars($row['email']) . "</td>
+                            <td>" . htmlspecialchars($row['nazev_ovoce']) . "</td>
+                            <td>" 
+                                . htmlspecialchars($row['mnozstvi']) . " " 
+                                . htmlspecialchars($row['jednotka']) . 
+                            "</td>
+                            <td>" . date("d.m.Y H:i", strtotime($row['datum_vytvoreni'])) . "</td>
                           </tr>";
                 }
                 ?>

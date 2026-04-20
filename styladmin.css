@@ -13,10 +13,12 @@ body {
     padding: 30px;
     border-radius: 20px;
     box-shadow: 0 8px 20px rgba(0,0,0,0.3);
-    width: 90%;
+    width: 95%;
     max-width: 1000px;
     margin: 100px auto 40px auto;
     color: #333;
+    overflow-x: auto;
+    box-sizing: border-box;
 }
 
 table {
@@ -26,6 +28,7 @@ table {
     background: white;
     border-radius: 10px;
     overflow: hidden;
+    min-width: 600px;
 }
 
 th {
@@ -81,11 +84,13 @@ tr:hover {
 
 .login-container {
     background: rgba(255, 255, 255, 0.9);
-    width: 350px;
-    padding: 40px;
+    width: 90%;
+    max-width: 380px;
+    padding: 40px 25px;
     border-radius: 15px;
     box-shadow: 0 4px 10px rgba(0,0,0,0.2);
     text-align: center;
+    margin: 20px auto;
 }
 
 .login-container p {
@@ -124,3 +129,26 @@ input {
     position: fixed;
     bottom: 0;
 }
+
+a[href="index.php"] {
+    display: inline-block;
+    margin-top: 20px;
+    color: gray;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+a[href="index.php"]:hover {
+    text-decoration: underline;
+}
+
+@media only screen and (max-width: 600px) {
+    #menu {
+        position: relative;
+        padding: 15px;
+    }
+
+    .admin-box {
+        margin-top: 20px;
+        padding: 20px 15px;
+    }

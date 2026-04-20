@@ -4,16 +4,18 @@ session_start();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['odeslat_objednavku'])) {
     $jmeno = $_POST['jmeno'];
+    $prijmeni = $_POST['prijmeni'];
     $email = $_POST['email'];
-    $produkt = $_POST['produkt'];
+    $produkt_id = $_POST['produkt_id'];
     $mnozstvi = $_POST['mnozstvi'];
+    $produkt_nazev = $_POST['produkt'];
 
     try {
-        $sql = 'INSERT INTO "Tuhackova_web".objednavky (jmeno, email, produkt, datum_vytvoreni, mnozstvi) 
-                VALUES (?, ?, ?, NOW(), ?)';
+        $sql = 'INSERT INTO "Tuhackova_web".objednavky (krestni_jmeno, prijmeni, email, produkt_id, datum_vytvoreni, mnozstvi) 
+                VALUES (?, ?, ?, ?, NOW(), ?)';
         $stmt_insert = $pdo->prepare($sql);
-        $stmt_insert->execute([$jmeno, $email, $produkt, $mnozstvi]);
-        $oznameni = "Objednávka na $mnozstvi $produkt byla odeslána!";
+        $stmt_insert->execute([$jmeno, $prijmeni, $email, $produkt_id, $mnozstvi]);
+        $oznameni = "Objednávka na $mnozstvi ks ($produkt_nazev) byla odeslána!";
         echo "<script>
             window.onload = function() { 
                 var element = document.getElementById('objednavka');
@@ -38,6 +40,7 @@ try {
 <html lang="cs">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Moje semestrální práce - Tropico</title>
     <link rel="stylesheet" href="styl.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
@@ -45,8 +48,10 @@ try {
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
     
     <script>
-    function doKosiku(nazev) {
+    function doKosiku(id, nazev, jednotka) {
+        document.getElementById('produkt_id').value = id;
         document.getElementById('vybrany_produkt').value = nazev;
+        document.getElementById('mnozstvi').placeholder = "Kolik " + jednotka + " chcete?";
         var sekce = document.getElementById('objednavka');
         sekce.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
@@ -112,7 +117,9 @@ try {
                     <p>Původ: <?php echo htmlspecialchars($row['puvod']); ?></p>
                     <p><b>Cena: <?php echo number_format($row['cena'], 2, ',', ' '); ?> Kč / <?php echo htmlspecialchars($row['jednotka']); ?></b></p>
                     
-                    <button type="button" onclick="doKosiku('<?php echo htmlspecialchars($row['nazev']); ?>')">Do košíku</button>
+                    <button type="button" onclick="doKosiku('<?php echo $row['id']; ?>', '<?php echo htmlspecialchars($row['nazev']); ?>', '<?php echo htmlspecialchars($row['jednotka']); ?>')">
+                        Do košíku
+                    </button>
                 </div>
             <?php endwhile; ?>
         </div>
@@ -128,8 +135,13 @@ try {
         <?php endif; ?>
 
         <form method="post" action="index.php">
-            <label for="jmeno">Jméno:</label>
+            <input type="hidden" name="produkt_id" id="produkt_id">
+            
+            <label for="jmeno">Křestní jméno:</label>
             <input type="text" name="jmeno" id="jmeno" required>
+    
+            <label for="prijmeni">Příjmení:</label>
+            <input type="text" name="prijmeni" id="prijmeni" required>
             
             <label for="email">E-mail:</label>
             <input type="email" name="email" id="email" required>
@@ -138,7 +150,7 @@ try {
             <input type="text" id="vybrany_produkt" name="produkt" readonly>
             
             <label for="mnozstvi">Množství (kolik chcete):</label>
-            <input type="text" name="mnozstvi" id="mnozstvi" placeholder="např. 5 kg" required>
+            <input type="number" name="mnozstvi" id="mnozstvi" min="1" placeholder="Zadejte počet" required>
             
             <button type="submit" name="odeslat_objednavku">ODESLAT</button>
         </form>

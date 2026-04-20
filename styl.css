@@ -171,3 +171,54 @@ button:hover, .moje-tlacitko:hover {
     padding: 40px;
     color: grey;
 }
+
+@media only screen and (max-width: 768px) {
+    #menu {
+        display: block;
+        text-align: center;
+        padding: 10px 15px;
+        height: auto;
+        position: relative;
+    }
+
+    #menu img {
+        display: block;
+        margin-bottom: 10px;
+        width: 50px;
+    }
+
+    #menu a {
+        display: inline-block;
+        margin: 5px 10px;
+        font-size: 16px;
+        font-weight: bold;
+    }
+    
+    .polozka {
+        display: block;
+        width: 80%;
+        margin: 20px auto;
+    }
+    
+    .nadpis-prekryv {
+        position: relative;
+        top: 0;
+        left: 0;
+        transform: none;
+        margin: 20px;
+        padding: 20px;
+        text-align: center;
+        color: black;
+
+    .nadpis-prekryv h1 {
+        font-size: 1.5rem;
+        text-shadow: none;
+        display: block;
+        margin-bottom: 10px;
+    }
+    
+    #objednavka {
+        width: 90%;
+        padding: 15px;
+    }
+}
